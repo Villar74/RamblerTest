@@ -1,0 +1,44 @@
+{
+  "name": "RamblerTest",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start -- --reset-cache",
+    "test": "jest",
+    "log": "adb logcat *:S ReactNative:V ReactNativeJS:V",
+    "android": "react-native run-android",
+    "android-r": "cd ./android && ./gradlew assembleRelease",
+    "emul": "~/Android/Sdk/emulator/emulator -avd Nexus_5X_API_26 &",
+    "prettier": "prettier --write `find js -name \"*.js\"`"
+  },
+  "dependencies": {
+    "moment": "^2.22.2",
+    "react": "16.6.0-alpha.8af6728",
+    "react-native": "0.57.4",
+    "react-native-action-button": "^2.8.5",
+    "react-native-easy-markdown": "^1.2.0",
+    "react-native-elements": "^0.19.1",
+    "react-native-image-picker": "^0.27.1",
+    "react-native-vector-icons": "^6.0.2",
+    "react-navigation": "^2.18.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "23.6.0",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-flowtype": "^3.2.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "jest": "23.6.0",
+    "metro-react-native-babel-preset": "0.49.0",
+    "prettier": "^1.15.2",
+    "react-test-renderer": "16.6.0-alpha.8af6728"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
