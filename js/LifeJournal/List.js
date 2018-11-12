@@ -1,3 +1,6 @@
+/**
+ Copyright © 2018- by Maxim Dzhafarov. All rights reserved
+ */
 import React from "react";
 import { FlatList, View } from "react-native";
 import { withNavigation } from "react-navigation";

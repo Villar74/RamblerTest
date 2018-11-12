@@ -1,3 +1,6 @@
+/**
+ Copyright © 2018- by Maxim Dzhafarov. All rights reserved
+ */
 import { createStackNavigator } from "react-navigation";
 import HomeScreen from "../HomeScreen";
 import Item from "../LifeJournal/Item";
