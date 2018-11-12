@@ -2,11 +2,18 @@
  Copyright © 2018- by Maxim Dzhafarov. All rights reserved
  */
 import React from "react";
-import { FlatList, View } from "react-native";
+import {
+  FlatList,
+  View,
+  BackHandler,
+  Alert,
+  DeviceEventEmitter
+} from "react-native";
 import { withNavigation } from "react-navigation";
 import Item from "./Item";
 import ActionButton from "react-native-action-button";
 import { Icon } from "react-native-elements";
+import { AsyncStorage } from "react-native";
 
 class List extends React.Component {
   constructor(props) {
@@ -15,6 +22,83 @@ class List extends React.Component {
       data: []
     };
   }
+
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
+    DeviceEventEmitter.addListener("CLEAR", this.clearAll);
+    AsyncStorage.getItem("DATA").then(data => {
+      if (data !== null) {
+        // We have data!!
+        this.setState({
+          data: JSON.parse(data)
+        });
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackButton);
+    DeviceEventEmitter.removeAllListeners("CLEAR");
+  }
+
+  clearAll = () => {
+    if (this.state.data.length !== 0) {
+      Alert.alert(
+        "Clear",
+        "Delete all data?",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          {
+            text: "Delete",
+            onPress: () => {
+              this.setState({
+                data: []
+              });
+            }
+          }
+        ],
+        {
+          cancelable: false
+        }
+      );
+    }
+  };
+
+  handleBackButton = () => {
+    // First, prepare a navigation prop for your child, or re-use one if already available.
+    if (this.props.navigation.isFocused()) {
+      Alert.alert(
+        "Exit App",
+        "Exiting the application?",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          {
+            text: "Exit",
+            onPress: () => this.saveData()
+          }
+        ],
+        {
+          cancelable: false
+        }
+      );
+    } else {
+      this.props.navigation.pop();
+    }
+    return true;
+  };
+
+  saveData = () => {
+    AsyncStorage.setItem("DATA", JSON.stringify(this.state.data));
+    BackHandler.exitApp();
+  };
 
   createItem = (name, title, content, date, img) => {
     let data = this.state.data;
@@ -42,6 +126,7 @@ class List extends React.Component {
         <FlatList
           style={{ flex: 1 }}
           data={this.state.data}
+          keyExtractor={(item, index) => item.id.toString()}
           renderItem={({ item }) => {
             return (
               <Item

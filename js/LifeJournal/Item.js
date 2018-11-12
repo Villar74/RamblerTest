@@ -82,12 +82,16 @@ class Item extends React.Component {
           <Markdown style={styles.content}>
             {this.state.content ? this.state.content : this.props.content}
           </Markdown>
-          <View style={styles.image}>
-            <Image
-              source={this.state.img ? this.state.img : this.props.img}
-              style={styles.uploadedImg}
-            />
-          </View>
+          {this.state.img || this.props.img ? (
+            <View style={styles.image}>
+              <Image
+                source={this.state.img ? this.state.img : this.props.img}
+                style={styles.uploadedImg}
+              />
+            </View>
+          ) : (
+            <View />
+          )}
         </View>
       </View>
     );

@@ -15,7 +15,6 @@ const example =
   "* and you can outsource ~~your~~ work to the content creators! \n\n";
 const options = {
   title: "Select Avatar",
-  customButtons: [{ name: "fb", title: "Choose Photo from Facebook" }],
   storageOptions: {
     skipBackup: true,
     path: "images"
@@ -117,7 +116,7 @@ class NewItem extends React.Component {
       } else if (response.customButton) {
         console.log("User tapped custom button: ", response.customButton);
       } else {
-        const source = { uri: response.uri };
+        const source = { uri: "data:image/png;base64," + response.data };
 
         this.setState({
           avatarSource: source
@@ -261,7 +260,11 @@ class NewItem extends React.Component {
           >
             <Text>{this.state.content}</Text>
           </TextInput>
-          <Image source={this.state.avatarSource} style={styles.uploadImg} />
+          {this.state.avatarSource ? (
+            <Image source={this.state.avatarSource} style={styles.uploadImg} />
+          ) : (
+            <View />
+          )}
         </View>
         <View style={styles.buttons}>
           <Icon
