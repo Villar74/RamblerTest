@@ -40,7 +40,6 @@ class List extends React.Component {
           style={{ flex: 1 }}
           data={this.state.data}
           renderItem={({ item }) => {
-            console.log(item);
             return (
               <Item
                 name={item.name}

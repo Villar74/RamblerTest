@@ -150,7 +150,6 @@ class NewItem extends React.Component {
   }
 
   back = () => {
-    console.log("works");
     if (this.state.content !== this.state.backContent)
       this.setState({
         newContent: this.state.content,
@@ -254,7 +253,6 @@ class NewItem extends React.Component {
                 }
               });
               this._handleSelectionChange.bind(this);
-              console.log(selection.start, selection.end);
             }}
             selection={this.state.selected}
           >
